@@ -1,55 +1,43 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { Event } from '../model/event';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EventService {
-  jsonUrl: string = 'http://loclahost:3000/events';
+  jsonUrl: string = 'http://localhost:3000/events';
 
   constructor(private http: HttpClient) { }
 
+  list$: BehaviorSubject<Event[]> = new BehaviorSubject<Event[]>([]);
+
   getAll(): void {
-    this.http.get<Event[]>(this.jsonUrl);
+    this.http.get<Event[]>(this.jsonUrl).subscribe(
+      event => this.list$.next(event));
   }
 
-  get(id: number): Observable<Event> {
+  get(id: number | string): Observable<Event> {
+    id = parseInt(('' + id), 10);
     return this.http.get<Event>(`${this.jsonUrl}/${id}`);
-
-    // id = typeof id === 'string' ? parseInt(id, 10) : id;
-    // const ev: Event | undefined = this.list.find(item => item.id === id);
-    // if (ev) {
-    //   return of(ev);
-    // }
-
-    // return of(new Event());
   }
 
   update(event: Event): Observable<Event> {
-    return this.http.put<Event>(this.jsonUrl, event);
-    // const index: number = this.list.findIndex(item => item.id === event.id);
-    // this.list.splice(index, 1, event);
-    // this.getAll();
-    // return of(this.list[index]);
+    return this.http.put<Event>(this.jsonUrl, event).pipe(
+      tap(() => this.getAll())
+    );
   }
 
-  create(event: Event): Observable<Event> {
-    return this.http.post<Event>(this.jsonUrl, event);
-    // event.id = this.list[this.list.length - 1].id + 1;
-    // this.list.push(event);
-    // this.getAll();
-    // console.log(this.list);
-    // return of(this.list[this.list.length - 1]);
+  create(event: Event): void {
+    this.http.post<Event>(this.jsonUrl, event)
+      .subscribe(() => this.getAll());
   }
 
-  remove(id: number): Observable<Event> {
-    return this.http.delete<Event>(`${this.jsonUrl}/${id}`);
-    // const index: number = this.list.findIndex(item => item.id === id);
-    // this.list.splice(index, 1);
-    // this.getAll();
-    // return of(this.list[index]);
+  remove(id: number): void {
+    this.http.delete<Event>(`${this.jsonUrl}/${id}`)
+    .subscribe( () =>this.getAll());
   }
 
 
@@ -86,13 +74,13 @@ export class EventService {
 
   // list$: BehaviorSubject<Event[]> = new BehaviorSubject<Event[]>(this.list);
 
-  // constructor(private http: HttpClient) { }
+  // constructor() { }
 
   // getAll(): void {
   //   this.list$.next(this.list);
   // }
 
-  // get(id: number): Observable<Event> {
+  // get(id: number | string): Observable<Event> {
   //   id = typeof id === 'string' ? parseInt(id, 10) : id;
   //   const ev: Event | undefined = this.list.find( item => item.id === id );
   //   if (ev) {
