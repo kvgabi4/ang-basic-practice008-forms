@@ -28,15 +28,19 @@ export class EventEditorComponent implements OnInit {
   ngOnInit(): void {}
 
   onUpdate(form: NgForm, event: Event): void {
-    if (event.id === 0) {
-      this.eventService.create(event).subscribe(
-        ev => this.router.navigate([''])
-      );
-    } else {
-      this.eventService.update(event).subscribe(
-        ev => this.router.navigate([''])
-      );
-    }
+    if (!event.id) {
+      // event.id = 11;
+      this.eventService.create(event);
+      this.router.navigate(['']);
+      //   .subscribe(
+        //   ev => this.router.navigate([''])
+        // );
+      } else {
+        this.eventService.update(event).subscribe(
+          ev => this.router.navigate([''])
+          );
+        }
+        console.log('onUpdate:',form.value, event)
   }
 
 }

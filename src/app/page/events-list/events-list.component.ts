@@ -21,8 +21,15 @@ export class EventsListComponent implements OnInit {
     this.eventService.getAll();
    }
 
-  onDelete(id: number) {
-    this.eventService.remove(id);
+  onDelete(event: Event) {
+    this.eventService.remove(event);
   }
+
+  // onCreate() {
+  //   const newEvent: Event = new Event
+  //   newEvent.id = 0;
+  //   console.log(newEvent)
+  //   this.eventService.create(newEvent);
+  // }
 
 }

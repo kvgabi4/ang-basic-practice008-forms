@@ -49,7 +49,7 @@
         <div class="d-flex justify-content-between">
           <label for="">City</label>
           <div [hidden]="eventForm.controls.city?.valid" class="error-message mt-1">
-            The city must be minimum 5, maximum 25 characters long and begin with an uppercase letter.
+            The city must begin with an uppercase letter and be minimum 5, maximum 25 characters.
           </div>
         </div>
         <input name="city" [(ngModel)]="event.location.city" type="text" class="form-control"

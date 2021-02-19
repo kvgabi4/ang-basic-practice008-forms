@@ -17,16 +17,16 @@
     </thead>
     <tbody>
       <tr *ngFor="let event of eventList$ | async">
-        <td>{{event.name}}</td>
-        <td>{{event.date}} </td>
-        <td>{{event.time}}</td>
-        <td>{{event.location.address}}, {{event.location.city}}, {{event.location.country}}</td>
-        <td>
+        <td *ngIf="event.id!==0">{{event.name}}</td>
+        <td *ngIf="event.id!==0">{{event.date}} </td>
+        <td *ngIf="event.id!==0">{{event.time}}</td>
+        <td *ngIf="event.id!==0">{{event.location.address}}, {{event.location.city}}, {{event.location.country}}</td>
+        <td *ngIf="event.id!==0">
           <div class="btn-group">
             <button [routerLink]="['event/' + event.id]" class="btn btn-info">
               <i class="fa fa-pencil"></i>
             </button>
-            <button (click)="onDelete(event.id)" class="btn btn-danger">
+            <button (click)="onDelete(event)" class="btn btn-danger">
               <i class="fa fa-trash"></i>
             </button>
           </div>

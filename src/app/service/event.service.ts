@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { find, tap } from 'rxjs/operators';
 import { Event } from '../model/event';
 
 @Injectable({
@@ -25,18 +25,22 @@ export class EventService {
   }
 
   update(event: Event): Observable<Event> {
-    return this.http.put<Event>(this.jsonUrl, event).pipe(
-      tap(() => this.getAll())
+    return this.http.patch<Event>(`${this.jsonUrl}/${event.id}`, event)
+      .pipe(tap(() => this.getAll())
     );
   }
 
   create(event: Event): void {
-    this.http.post<Event>(this.jsonUrl, event)
+    // const newId: number = this.http.get<Event[]>(this.jsonUrl).subscribe(
+    //   event => this.list$.length);
+
+    // event.id = this.list$.length
+    this.http.post<Event>(`${this.jsonUrl}`, event)
       .subscribe(() => this.getAll());
   }
 
-  remove(id: number): void {
-    this.http.delete<Event>(`${this.jsonUrl}/${id}`)
+  remove(event: Event): void {
+    this.http.delete<Event>(`${this.jsonUrl}/${event.id}`)
     .subscribe( () =>this.getAll());
   }
 
