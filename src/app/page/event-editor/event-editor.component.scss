@@ -1,0 +1,13 @@
+.error-message {
+  font-style: italic;
+  font-size: 0.8em;
+  color: rgb(155, 4, 4);
+  animation-name: error;
+  animation-duration: .5s;
+  position: relative;
+}
+
+@keyframes error {
+  0% {right: 10px; opacity: 0;}
+  100% {right: 0px; opacity: 1;}
+}
