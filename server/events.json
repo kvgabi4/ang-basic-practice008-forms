@@ -62,18 +62,18 @@
       "time": "09am",
       "location": {
         "address": "Széchenyi tér 1.",
-        "city": "Budapest",
+        "city": "Miskolc",
         "country": "HUNGARY"
       }
     },
     {
       "id": 6,
-      "name": "Angular Workshop",
-      "date": "23/02/2021",
-      "time": "09am",
+      "name": "Angular Event",
+      "date": "01/01/2021",
+      "time": "08am",
       "location": {
         "address": "Széchenyi tér 1.",
-        "city": "Budapest",
+        "city": "Miskolc",
         "country": "HUNGARY"
       }
     }
